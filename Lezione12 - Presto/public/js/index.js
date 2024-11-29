@@ -1,6 +1,4 @@
-
-
-
+/*
 fetch('/server/api/categorie.json')
     .then((response) => {
 
@@ -53,6 +51,55 @@ fetch('/server/api/categorie.json')
         // problema lato client
         console.log(error);
     });
+
+*/
+
+
+document.addEventListener('DOMContentLoaded', async () => {
+
+    const response = await fetch('/server/api/categorie.json');
+
+    if(response.status != 200) {
+        throw new Error('problema lato server');
+    }
+
+    const categories = await response.json();
+    
+    const categoriesRow = document.getElementById('categoriesRow');
+        
+    categories.forEach((category) => {
+        console.log(category);
+
+        const col = document.createElement('div');
+        col.classList.add('col-12', 'col-md-6', 'col-lg-4', 'col-xl-3');
+        categoriesRow.appendChild(col);
+
+        const card = document.createElement('div');
+        card.classList.add('category-card');
+        col.appendChild(card);
+
+        const link = document.createElement('a');
+        link.setAttribute('href', '#');
+        card.appendChild(link);
+
+        const iconContainer = document.createElement('div');
+        iconContainer.classList.add('icon-container');
+        link.appendChild(iconContainer);
+
+        const icon = document.createElement('i');
+        icon.classList.add('bi', 'bi-heart-fill');  // TODO
+        iconContainer.appendChild(icon);
+
+        const title = document.createElement('h3');
+        title.textContent = category.name;
+        link.appendChild(title);
+
+        const description = document.createElement('p');
+        description.classList.add('mb-0');
+        description.textContent = `${category.announcementsCount} Annunci`;
+        link.appendChild(description);
+    }); 
+});
 
 
 /*
