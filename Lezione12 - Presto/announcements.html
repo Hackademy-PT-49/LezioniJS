@@ -38,53 +38,53 @@
     <main>
         <!-- form -->
         <section class="container p-4 bg-primary rounded-4">
-            <form class="row g-4">
+            <form id="filterForm" class="row g-4">
 
                 <div class="col-12 col-md-6">
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="floatingInput1" placeholder="Cerca">
-                        <label for="floatingInput1">Cerca</label>
+                        <input type="text" class="form-control" id="searchInput" placeholder="Cerca">
+                        <label for="searchInput">Cerca</label>
                     </div>
                 </div>
     
                 <div class="col-12 col-md-6">
                     <div class="form-floating">
-                        <select class="form-select" id="floatingSelect" >
+                        <select class="form-select" id="categorySelect" >
                             <option selected value="">Tutti gli annunci</option>
                             <option value="Elettronica">Elettronica</option>
                             <option value="Motori">Motori</option>
                             <option value="Sport">Sport</option>
                         </select>
-                        <label for="floatingSelect">Filtra per annunci</label>
+                        <label for="categorySelect">Filtra per annunci</label>
                     </div>
                 </div>
     
                 <div class="col-12 col-md-3">
                     <div class="form-floating">
-                        <input type="number" min="0" class="form-control" id="floatingInput2" placeholder="Min Price">
-                        <label for="floatingInput2">Min Price</label>
+                        <input type="number" min="0" class="form-control" id="minPriceInput" placeholder="Min Price">
+                        <label for="minPriceInput">Min Price</label>
                     </div>
                 </div>
     
                 <div class="col-12 col-md-3">
                     <div class="form-floating">
-                        <input type="number" min="0" class="form-control" id="floatingInput3" placeholder="Max Price">
-                        <label for="floatingInput3">Max Price</label>
+                        <input type="number" min="0" class="form-control" id="maxPriceInput" placeholder="Max Price">
+                        <label for="maxPriceInput">Max Price</label>
                     </div>
                 </div>
     
                 <div class="col-12 col-md-3">
                     <div class="form-floating">
-                        <select class="form-select" id="floatingSelect2" >
+                        <select class="form-select" id="sortSelect" >
                             <option selected value="">Nessun ordine</option>
                             <option value="descByDate">Dal più recente</option>
                             <option value="ascByDate">Dal più vecchio</option>
-                            <option value="ascByPrice">Dal più costoso</option>
-                            <option value="descByPrice">Dal meno costoso</option>
+                            <option value="descByPrice">Dal più costoso</option>
+                            <option value="ascByPrice">Dal meno costoso</option>
                             <option value="ascByAlpha">Dalla A alla Z</option>
                             <option value="descByAlpha">Dalla Z alla A</option>
                         </select>
-                        <label for="floatingSelect2">Ordina Annunci</label>
+                        <label for="sortSelect">Ordina Annunci</label>
                     </div>
                 </div>
     
