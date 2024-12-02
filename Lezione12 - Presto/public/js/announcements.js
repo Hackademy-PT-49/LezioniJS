@@ -1,3 +1,20 @@
+function populateCategorySelect(announcements, parentElement) {
+    const categories = new Set();
+
+    announcements.forEach((announcement) => {
+        categories.add(announcement.category);
+    });
+
+    categories.forEach((category) => {
+        const option = document.createElement('option');
+        option.setAttribute('value', category);
+        option.textContent = category;
+
+        parentElement.appendChild(option);
+    });
+}
+
+
 function generateAnnoucementColumn(announcement) {
 
     const date = new Date(announcement.createdAt);
@@ -114,17 +131,17 @@ async function loadAnnouncements() {
 
 document.addEventListener('DOMContentLoaded', async () => {
 
-    const announcements = await loadAnnouncements();
-
-    populateAnnouncementsRow(announcements);
-
     const searchInput = document.getElementById('searchInput');
     const categorySelect = document.getElementById('categorySelect');
     const minPriceInput = document.getElementById('minPriceInput');
     const maxPriceInput = document.getElementById('maxPriceInput');
     const sortSelect = document.getElementById('sortSelect');
-
     const filterForm = document.getElementById('filterForm');
+
+    const announcements = await loadAnnouncements();
+    populateCategorySelect(announcements, categorySelect);
+    populateAnnouncementsRow(announcements);
+
     filterForm.addEventListener('submit', (event) => {
         event.preventDefault();
 
@@ -142,3 +159,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         // searchInput.value = ''
     });
 });
+
+
+/*
+let categories = new Set();
+categories.add('Motori');
+categories.add('Sport');
+categories.add('Motori');
+categories.add('Motori');
+categories.add('Motori');
+categories.add('Motori');
+
+categories.forEach((category) => {
+    console.log(category);
+});
+*/
