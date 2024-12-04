@@ -22,7 +22,7 @@ function generateAnnoucementColumn(announcement) {
     const col = document.createElement('div');
     col.classList.add('col-12', 'col-md-6', 'col-xl-4');
     col.innerHTML = `
-    <a href="/announcement.html?id=${announcement.id}" class="card">
+    <a href="/announcement.html?id=${announcement.id}" class="card text-decoration-none">
         <div class="position-relative">
             <img src="https://picsum.photos/640/480" class="card-img-top" alt="...">
             <span class="position-absolute top-0 end-0 badge py-2 px-4 ${announcement.type == 'sell' ? 'bg-danger' : 'bg-primary'}">${announcement.type.toUpperCase()}</span>
@@ -33,7 +33,7 @@ function generateAnnoucementColumn(announcement) {
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
         </div>
         <div class="card-footer d-flex justify-content-around p-4 text-body-secondary text-primary">
-            <p class="mb-0"><i class="bi bi-heart-fill"></i> Like</p>
+            <p class="mb-0"><button class="btn"><i class="bi bi-heart-fill"></i> Like</button></p>
             <p class="mb-0"><i class="bi bi-bookmark-check-fill"></i> ${announcement.category}</p>
             <p class="mb-0"><i class="bi bi-calendar-fill"></i> ${date.toLocaleDateString()}</p>
         </div>
