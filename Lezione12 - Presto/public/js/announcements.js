@@ -22,7 +22,7 @@ function generateAnnoucementColumn(announcement) {
     const col = document.createElement('div');
     col.classList.add('col-12', 'col-md-6', 'col-xl-4');
     col.innerHTML = `
-    <div class="card">
+    <a href="/announcement.html?id=${announcement.id}" class="card">
         <div class="position-relative">
             <img src="https://picsum.photos/640/480" class="card-img-top" alt="...">
             <span class="position-absolute top-0 end-0 badge py-2 px-4 ${announcement.type == 'sell' ? 'bg-danger' : 'bg-primary'}">${announcement.type.toUpperCase()}</span>
@@ -37,7 +37,7 @@ function generateAnnoucementColumn(announcement) {
             <p class="mb-0"><i class="bi bi-bookmark-check-fill"></i> ${announcement.category}</p>
             <p class="mb-0"><i class="bi bi-calendar-fill"></i> ${date.toLocaleDateString()}</p>
         </div>
-    </div>`;
+    </a>`;
 
     return col;
 }
@@ -174,3 +174,5 @@ categories.forEach((category) => {
     console.log(category);
 });
 */
+
+
