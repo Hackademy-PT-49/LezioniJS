@@ -21,6 +21,8 @@ function generateAnnoucementColumn(announcement) {
 
     const col = document.createElement('div');
     col.classList.add('col-12', 'col-md-6', 'col-xl-4');
+
+    /*
     col.innerHTML = `
     <a href="/announcement.html?id=${announcement.id}" class="card text-decoration-none">
         <div class="position-relative">
@@ -38,6 +40,87 @@ function generateAnnoucementColumn(announcement) {
             <p class="mb-0"><i class="bi bi-calendar-fill"></i> ${date.toLocaleDateString()}</p>
         </div>
     </a>`;
+    */
+
+    const anchor = document.createElement('a');
+    anchor.className = 'card text-decoration-none';
+    anchor.setAttribute('href',`/announcement.html?id=${announcement.id}`);
+    col.append(anchor);
+
+    const imageContainer = document.createElement('div');
+    imageContainer.className = 'position-relative';
+    anchor.appendChild(imageContainer);
+
+    const image = document.createElement('img');
+    image.className = 'card-img-top';
+    image.setAttribute('src', 'https://picsum.photos/640/480');
+    imageContainer.appendChild(image);
+
+    const badge = document.createElement('span');
+    badge.className = `position-absolute top-0 end-0 badge py-2 px-4 ${announcement.type === 'sell' ? 'bg-danger' : 'bg-primary'}`;
+    badge.textContent = announcement.type.toUpperCase();
+    imageContainer.appendChild(badge);
+
+    const body = document.createElement('div');
+    body.className = 'card-body p-4';
+    anchor.appendChild(body);
+
+    const price = document.createElement('p');
+    price.className = 'card-subtitle fw-semibold fs-5 text-primary';
+    price.textContent = `€${announcement.price}`;
+    body.appendChild(price);
+
+    const title = document.createElement('h5');
+    title.className = 'card-title my-3 display-5';
+    title.textContent = announcement.name;
+    body.appendChild(title);
+
+    const description = document.createElement('p');
+    description.className = 'card-text';
+    description.textContent = 'Some quick example text to build on the card title and make up the bulk of the card\'s content.';
+    body.appendChild(description);
+
+    const footer = document.createElement('div');
+    footer.className = 'card-footer d-flex justify-content-around align-items-center p-4 text-body-secondary text-primary';
+    anchor.appendChild(footer);
+
+    const likeBtn = document.createElement('button');
+    likeBtn.className = 'btn text-primary';
+    footer.appendChild(likeBtn);
+
+    const likeIcon = document.createElement('i');
+    likeIcon.className = 'bi bi-heart-fill';
+    likeBtn.appendChild(likeIcon);
+
+    const likeText = document.createElement('span');
+    likeText.textContent = 'Like';
+    likeBtn.appendChild(likeText);
+
+
+    const category = document.createElement('p');
+    category.className = 'mb-0';
+    footer.appendChild(category);
+
+    const categoryIcon = document.createElement('i');
+    categoryIcon.className = 'bi bi-bookmark-check-fill';
+    category.appendChild(categoryIcon);
+
+    const categoryText = document.createElement('span');
+    categoryText.textContent = `${announcement.category}`;
+    category.appendChild(categoryText);
+
+
+    const createdAtParagraph = document.createElement('p');
+    createdAtParagraph.className = 'mb-0';
+    footer.appendChild(createdAtParagraph);
+
+    const createdAtIcon = document.createElement('i');
+    createdAtIcon.className = 'bi bi-calendar-fill';
+    createdAtParagraph.appendChild(createdAtIcon);
+
+    const createdAtText = document.createElement('span');
+    createdAtText.textContent = `${date.toLocaleDateString()}`;
+    createdAtParagraph.appendChild(createdAtText);
 
     return col;
 }
