@@ -1,3 +1,30 @@
+function LikeManager() {
+    this.likes = [];
+
+    this.load = function() {
+        // TODO leggere i dati dal localStorage
+        const serializedLikes = localStorage.getItem('likeManager');
+
+        if(serializedLikes) {
+            this.likes = JSON.parse(serializedLikes);
+        }
+    }
+
+    this.get = function(index) {
+        return Boolean(this.likes[index]);
+    }
+
+    this.toggle = function(index) {
+
+        // inverto lo stato del like
+        this.likes[index] = !this.likes[index];
+
+        // salvo tutti like
+        const serializedLikes = JSON.stringify(this.likes);
+        localStorage.setItem('likeManager', serializedLikes);
+    }
+}
+
 function populateCategorySelect(announcements, parentElement) {
     const categories = new Set();
 
@@ -15,7 +42,7 @@ function populateCategorySelect(announcements, parentElement) {
 }
 
 
-function generateAnnoucementColumn(announcement) {
+function generateAnnoucementColumn(announcement, likeManager) {
 
     const date = new Date(announcement.createdAt);
 
@@ -84,9 +111,28 @@ function generateAnnoucementColumn(announcement) {
     footer.className = 'card-footer d-flex justify-content-around align-items-center p-4 text-body-secondary text-primary';
     anchor.appendChild(footer);
 
+
+
+
     const likeBtn = document.createElement('button');
-    likeBtn.className = 'btn text-primary';
+    // likeBtn.className = 'btn text-primary';
+    // likeBtn.className = likeManager.get(announcement.id) ? 'btn text-danger' : 'btn text-primary';
+    if(likeManager.get(announcement.id)) {
+        likeBtn.className = 'btn text-danger';
+    } else {
+        likeBtn.className = 'btn text-primary';
+    }
+
+    likeBtn.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        likeManager.toggle(announcement.id);
+        likeBtn.className = likeManager.get(announcement.id) ? 'btn text-danger' : 'btn text-primary';
+    });
     footer.appendChild(likeBtn);
+
+
+
 
     const likeIcon = document.createElement('i');
     likeIcon.className = 'bi bi-heart-fill';
@@ -95,7 +141,6 @@ function generateAnnoucementColumn(announcement) {
     const likeText = document.createElement('span');
     likeText.textContent = 'Like';
     likeBtn.appendChild(likeText);
-
 
     const category = document.createElement('p');
     category.className = 'mb-0';
@@ -108,7 +153,6 @@ function generateAnnoucementColumn(announcement) {
     const categoryText = document.createElement('span');
     categoryText.textContent = `${announcement.category}`;
     category.appendChild(categoryText);
-
 
     const createdAtParagraph = document.createElement('p');
     createdAtParagraph.className = 'mb-0';
@@ -125,7 +169,7 @@ function generateAnnoucementColumn(announcement) {
     return col;
 }
 
-function populateAnnouncementsRow(announcements) {
+function populateAnnouncementsRow(announcements, likeManager) {
     const announcementsRow = document.getElementById('announcementsRow');
 
     // cancello gli elementi contenuti all'interno di announcementsRow
@@ -135,7 +179,7 @@ function populateAnnouncementsRow(announcements) {
     }
 
     announcements.forEach((announcement) => {
-        const col = generateAnnoucementColumn(announcement);
+        const col = generateAnnoucementColumn(announcement, likeManager);
         announcementsRow.appendChild(col);
     });
 }
@@ -221,9 +265,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     const sortSelect = document.getElementById('sortSelect');
     const filterForm = document.getElementById('filterForm');
 
+
+    const likeManager = new LikeManager();
+    likeManager.load();
+
     const announcements = await loadAnnouncements();
     populateCategorySelect(announcements, categorySelect);
-    populateAnnouncementsRow(announcements);
+    populateAnnouncementsRow(announcements, likeManager);
 
     filterForm.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -237,7 +285,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         };
 
         const announcementsFiltered = announcementsFilteringAndSorting(announcements, options);
-        populateAnnouncementsRow(announcementsFiltered);
+        populateAnnouncementsRow(announcementsFiltered, likeManager);
 
         // searchInput.value = ''
     });
